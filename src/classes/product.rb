@@ -9,15 +9,14 @@ class Product
         @products = {}
         @tty_prompt = TTY::Prompt.new
         @selected_products = []
-    end
 
-    def display_products
         # Make hash for all products
         json = File.read('./data/products.json')
         @products = JSON.parse(json)
+    end
 
+    def display_products
         table = TTY::Table.new(header: ["Product", "Unit price", "Stock available"])
-
         @products.each do |key, value|
             table << value
         end
@@ -26,6 +25,6 @@ class Product
 
     def select_products
         @selected_products = @tty_prompt.multi_select("Select products?", @products.keys)
-        pp @selected_products
+        @selected_products
     end
 end

@@ -126,3 +126,9 @@ def ask_user_for_receipt
     end
 end
 #End of Class Checkout
+
+
+user_selection = tty_prompt.yes?("Do you want to buy products?")
+if user_selection == true
+
+    
