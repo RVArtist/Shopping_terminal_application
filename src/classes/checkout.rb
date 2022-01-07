@@ -38,24 +38,26 @@ class Checkout
         user_selection = tty_prompt.select("Are you paying by cash or card?", choices)
         if user_selection == 1
             pp its_cart.cart_array
+            subtotal = its_cart.calculate_subtotal
             cart_sub_array = its_cart.cart_array.pop
             #pp cart_sub_array
             if cart_sub_array.empty?
                 puts "No item to checkout, please buy some items"
             else
-                puts "Please enter $ #{cart_sub_array[3]} to make the payment"
+                #call the subtotal method from itsCart
+                puts "Please enter $ #{subtotal} to make the payment"
                 amount = gets.chomp.to_f
-                if amount > cart_sub_array[3].to_f
-                    balance = amount - cart_sub_array[3].to_f
+                if amount > subtotal.to_f
+                    balance = amount - subtotal
                     puts ("Here is your balance - $#{balance}")
                 end
-                receipt_option = tty_prompt.yes?("Thank you for the payment, do you want a receipt?")
-                if receipt_option
+                #receipt_option = tty_prompt.yes?("Thank you for the payment, do you want a receipt?")
+                #if receipt_option
                     #Generate receipt
-                else
-                    puts artii.asciify('Thank you for shopping,see you again').colorize(:light_blue)
-                    exit
-                end
+                #else
+                puts artii.asciify('Thank you for shopping,see you again').colorize(:light_blue)
+                    #exit
+                #end
             end
         else
             #process card information

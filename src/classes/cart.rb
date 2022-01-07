@@ -10,10 +10,9 @@ class Cart
     end
 
     def add_to_cart(product_quantity)
-        match_found = false
         line_total = 0
         product_quantity.each do |product_price|
-
+            match_found = false
             #append to same array in case same product is selected again
             if @cart_array.empty?
                 product_details = its_product.products.fetch(product_price[0])
@@ -67,12 +66,12 @@ class Cart
             table << cart_sub_array
         end
         subtotal = calculate_subtotal
-        cart_sub_array =[]
-        cart_sub_array.push("Subtotal")
-        cart_sub_array.push(" ")
-        cart_sub_array.push(" ")
-        cart_sub_array.push(subtotal)
-        @cart_array.push(cart_sub_array)
+        #cart_sub_array =[]
+        #cart_sub_array.push("Subtotal")
+        #cart_sub_array.push(" ")
+        #cart_sub_array.push(" ")
+        #cart_sub_array.push(subtotal)
+        #@cart_array.push(cart_sub_array)
 
         table << ["Subtotal ", " ", " ",subtotal]
         puts table.render(:ascii)
