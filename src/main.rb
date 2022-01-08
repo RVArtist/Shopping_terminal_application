@@ -64,7 +64,7 @@ checkout = Checkout.new(cart)
 if is_customer
     #Customer menu
     choices_customer = {"Display products": 1, "Add product/products to cart": 2, "View cart": 3,
-                        "Delete product/products from cart": 4, "Proceed to checkout": 5, "Show the receipt": 6, "Exit": 7}
+                        "Delete product/products from cart": 4, "Proceed to checkout": 5, "Exit": 6}
 
     while true do
         user_selection = tty_prompt.select("Please select one of the options to proceed", choices_customer)
@@ -89,20 +89,25 @@ if is_customer
         when 3
             cart.view_cart
         when 4
-            cart_item_to_modify = Hash.new
-            selected_products = products.select_products
-            #Ask user about the quantity
-            delete_option = tty_prompt.yes?("Do you want to remove all of the product line?")
+            #if cart is not empty 
+            if !cart.cart_array.empty?
+                cart_item_to_modify = Hash.new
+                selected_products = products.select_products           
+                #Ask user about the quantity
+                delete_option = tty_prompt.yes?("Do you want to remove all of the product line?")
 
-            if !delete_option
-                selected_products.each do |product|
-                    puts ("How much #{product} item do you want to delete?")
-                    quantity = gets.chomp.to_i
-                    cart_item_to_modify[product] = quantity
+                if !delete_option
+                    selected_products.each do |product|
+                        puts ("How much #{product} item do you want to delete?")
+                        quantity = gets.chomp.to_i
+                        cart_item_to_modify[product] = quantity
+                    end
+                    cart.delete_from_cart(selected_products, cart_item_to_modify, false)
+                else
+                    cart.delete_from_cart(selected_products, cart_item_to_modify, true)
                 end
-                cart.delete_from_cart(selected_products, cart_item_to_modify, false)
             else
-                cart.delete_from_cart(selected_products, cart_item_to_modify, true)
+                puts ("Nothing in cart to delete!")
             end
         when 5
             #proceed to check out
@@ -110,8 +115,10 @@ if is_customer
                 puts "Your cart is empty"
             else
                 checkout.process_payment()
+                #clear the cart
+                cart.cart_array.clear
             end
-        when 7
+        when 6
             puts artii.asciify('Exiting, Bye....').colorize(:light_blue)
             exit
         else
