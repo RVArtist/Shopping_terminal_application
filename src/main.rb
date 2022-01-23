@@ -143,6 +143,28 @@ while true do
             selected_products = products.select_products
             #loop through the products with the key and change the price
             products.change_price
+          elsif user_selection == 3
+            #Add a new product
+            new_product_hash = Hash.new
+            puts "Please enter the product name"
+            key = gets.chomp
+            pp key
+            new_product = []
+            new_product[0] = key
+            puts "Please enter the unit price"
+            new_product[1] = gets.chomp
+            puts "Please enter the no of stock available"
+            new_product[2] = gets.chomp
+            #make a hash entry
+            new_product_hash[key] = new_product
+            #Write to JSON file
+            products.add_new_item_to_JSON(new_product_hash)
+          elsif user_selection == 4
+            #Delete a product
+            puts "Please enter the product you want to delete from the product list"
+            products.display_products
+            selected_products = products.select_products
+            products.delete_products
           elsif user_selection == 5
             break
           else
