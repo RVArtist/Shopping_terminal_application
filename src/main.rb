@@ -64,7 +64,7 @@ while true do
     if is_customer
         #Customer menu
         choices_customer = {"Display products": 1, "Add product/products to cart": 2, "View cart": 3,
-                            "Delete product/products from cart": 4, "Proceed to checkout": 5, "Exit": 6}
+                            "Delete product/products from cart": 4, "Proceed to checkout": 5, "Exit to main menu": 6}
 
         while true do
             user_selection = tty_prompt.select("Please select one of the options to proceed", choices_customer)
@@ -120,7 +120,7 @@ while true do
                 end
             when 6
                 puts artii.asciify('Exiting, Bye....').colorize(:light_blue)
-                exit
+                break
             else
                 puts "Wrong choice entered, please try again, enter 7 if you want to exit"
             end
@@ -129,13 +129,25 @@ while true do
     else
         #Owner menu
         choices_owner = {"Display products": 1, "Change the price of a product": 2, "Add a new product": 3,
-                        "Delete an existing product": 4, "Exit": 5}
-        user_selection = tty_prompt.select("Please select one of the options to proceed", choices_owner)
-        #user_selection = tty_prompt.select("Hi, What would you like to do?", choices)
-        if user_selection == 5
-            exit
-        else
+                        "Delete an existing product": 4, "Exit to main menu": 5}
+        while true do
+          user_selection = tty_prompt.select("Please select one of the options to proceed", choices_owner)
+          #user_selection = tty_prompt.select("Hi, What would you like to do?", choices)
+          if user_selection == 1
+            #Display products
+            puts artii.asciify("Displaying products ......").colorize(:blue)
+            #Call the display products from product class
+            products.display_products
+          elsif user_selection == 2
+            #Change the price of a product
+            selected_products = products.select_products
+            #loop through the products with the key and change the price
+            products.change_price
+          elsif user_selection == 5
+            break
+          else
             puts ("Shop ownwer functionalities are not implemented, please select customer options or exit")
+          end
         end
     end
 end
