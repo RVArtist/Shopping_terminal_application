@@ -18,11 +18,11 @@ class Cart
                 product_details = its_product.products.fetch(product_price[0])
                 #make cart line
                 # product quantity price
-                line_total = product_price[1].to_i * product_details[2].to_i
+                line_total = product_price[1].to_i * product_details[1].to_f
                 @cart_sub_array = []
                 @cart_sub_array.push(product_price[0])
                 @cart_sub_array.push(product_price[1])
-                @cart_sub_array.push(product_details[2])
+                @cart_sub_array.push(product_details[1])
                 @cart_sub_array.push(line_total)
 
                 @cart_array.push(@cart_sub_array)
@@ -38,11 +38,11 @@ class Cart
                     product_details = its_product.products.fetch(product_price[0])
                     #make cart line
                     # product quantity price
-                    line_total = product_price[1].to_i * product_details[2].to_f
+                    line_total = product_price[1].to_i * product_details[1].to_f
                     @cart_sub_array = []
                     @cart_sub_array.push(product_price[0])
                     @cart_sub_array.push(product_price[1])
-                    @cart_sub_array.push(product_details[2])
+                    @cart_sub_array.push(product_details[1])
                     @cart_sub_array.push(line_total)
         
                     @cart_array.push(@cart_sub_array)
@@ -93,8 +93,6 @@ class Cart
             #delete line for 0 quantity
             product_quantity.each do |key, value|
                 @cart_array.each do |cart_sub_array|
-                    pp key
-                    pp cart_sub_array[0]
                     #pp cart_sub_array[0]
                     if key == cart_sub_array[0]
                         #match found

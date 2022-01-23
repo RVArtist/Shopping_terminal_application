@@ -27,4 +27,39 @@ class Product
         @selected_products = @tty_prompt.multi_select("Select products?", @products.keys)
         @selected_products
     end
+
+    def change_price
+        #loop through products and find product to change the price
+        @selected_products.each do |selected_product|
+          edit_product = @products.fetch(selected_product)
+          pp edit_product.class
+          puts "Please enter the new price for #{selected_product}"
+          new_price = gets.chomp.to_f
+          edit_product[1] = new_price.to_s
+          puts "New price of #{new_price} added for #{selected_product}"
+            #Update JSON file
+          File.open("./data/products.json", "w") do |f|
+            f.write(JSON.pretty_generate(products))
+          end
+        end
+    end
+
+    def add_new_item_to_JSON(new_product_hash)
+      # Add new hash item to existing products hash
+      @products.merge!(new_product_hash)
+      #Update JSON file
+      File.open("./data/products.json", "w") do |f|
+        f.write(JSON.pretty_generate(products))
+      end
+    end
+
+    def delete_products
+      @selected_products.each do |selected_product|
+        products.delete(selected_product) { |key| "Key #{selected_product} not found"}
+        #Update JSON file
+        File.open("./data/products.json", "w") do |f|
+          f.write(JSON.pretty_generate(products))
+        end
+      end
+    end
 end
