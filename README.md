@@ -124,6 +124,14 @@ Hash.each method is used as a control structure to loop through and do a block f
         end
         puts table.render(:ascii)`
 
+### Error handling 
+
+Raising StandardError for error conditions like wrong card type other than VISA and MasterCard.
+
+Raising StandardError for Wrong expiry date format for credit cards
+
+Raising StandardError for wrong number of digits for CVV.
+
 ## User interaction
 
 ### How the user will find out how to interact with / use each feature
